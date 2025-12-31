@@ -1,0 +1,49 @@
+{
+  "name": "jello-lang",
+  "displayName": "Jello Language Support",
+  "description": "Syntax highlighting and language support for the Jello programming language",
+  "version": "0.1.0",
+  "publisher": "jello-lang",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "jello",
+        "aliases": [
+          "Jello",
+          "jello"
+        ],
+        "extensions": [
+          ".jello"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icon.png",
+          "dark": "./icon.png"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "jello",
+        "scopeName": "source.jello",
+        "path": "./syntaxes/jello.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "jello",
+        "path": "./snippets/jello.json"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/jello-lang"
+  }
+}
