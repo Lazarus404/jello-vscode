@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "jello",
+      "request": "launch",
+      "name": "Debug Current Jello File",
+      "program": "${file}",
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": true
+    },
+    {
+      "type": "jello",
+      "request": "launch",
+      "name": "Debug test-syntax.jello",
+      "program": "${workspaceFolder}/test-syntax.jello",
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false
+    }
+  ]
+}
