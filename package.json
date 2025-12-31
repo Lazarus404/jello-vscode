@@ -1,0 +1,136 @@
+{
+  "name": "jello-lang",
+  "displayName": "Jello Language Support",
+  "description": "Complete language support for Jello: syntax highlighting, debugging (DAP), and more",
+  "version": "0.1.0",
+  "publisher": "jello-lang",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Debuggers"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onDebugResolve:jello"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "jello",
+        "aliases": [
+          "Jello",
+          "jello"
+        ],
+        "extensions": [
+          ".jello"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icon.png",
+          "dark": "./icon.png"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "jello",
+        "scopeName": "source.jello",
+        "path": "./syntaxes/jello.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "jello",
+        "path": "./snippets/jello.json"
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "jello",
+        "label": "Jello",
+        "languages": [
+          "jello"
+        ],
+        "configurationAttributes": {
+          "launch": {
+            "required": [
+              "program"
+            ],
+            "properties": {
+              "program": {
+                "type": "string",
+                "description": "Path to the .jlo (or .jello) program to debug."
+              },
+              "cwd": {
+                "type": "string",
+                "description": "Working directory for the Jello VM. Defaults to the workspace folder."
+              },
+              "jelloPath": {
+                "type": "string",
+                "description": "Path to the Jello VM executable. Defaults to 'jello' (from PATH)."
+              },
+              "jellocPath": {
+                "type": "string",
+                "description": "Path to the Jello compiler. Used when program is a .jello file. Defaults to 'jelloc' (from PATH)."
+              },
+              "jelloLibPath": {
+                "type": "string",
+                "description": "Value for JELLO_PATH to find JDLLs (debug.jdll/std.jdll). Defaults to '<workspaceFolder>/libs'."
+              }
+            }
+          }
+        },
+        "initialConfigurations": [
+          {
+            "type": "jello",
+            "request": "launch",
+            "name": "Debug Jello (DAP stdio)",
+            "program": "${file}"
+          }
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "Jello Debugger",
+      "properties": {
+        "jello.debugger.jelloPath": {
+          "type": "string",
+          "default": "jello",
+          "description": "Path to the Jello VM executable used for debugging."
+        },
+        "jello.debugger.jellocPath": {
+          "type": "string",
+          "default": "jelloc",
+          "description": "Path to the Jello compiler used when debugging .jello sources."
+        },
+        "jello.debugger.jelloLibPath": {
+          "type": "string",
+          "default": "${workspaceFolder}/libs",
+          "description": "JELLO_PATH value for resolving JDLLs (debug/std/etc)."
+        },
+        "jello.debugger.pauseAllActors": {
+          "type": "boolean",
+          "default": true,
+          "description": "When true, pause all actors when any actor hits a breakpoint. When false, only pause the actor that hit the breakpoint."
+        },
+        "jello.debugger.exceptionBreakpoints": {
+          "type": "string",
+          "enum": ["never", "uncaught", "all"],
+          "default": "uncaught",
+          "description": "When to pause on exceptions: never, only on uncaught exceptions, or on all exceptions (both thrown and uncaught).",
+          "enumDescriptions": [
+            "Never pause on exceptions",
+            "Pause only on uncaught exceptions (default)",
+            "Pause on all exceptions (thrown and uncaught)"
+          ]
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/jello-lang"
+  }
+}

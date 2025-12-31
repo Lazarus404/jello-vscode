@@ -1,0 +1,168 @@
+{
+  "Function": {
+    "prefix": "fn",
+    "body": ["fn(${1:args}) {", "\t${2:// body}", "}"],
+    "description": "Create a function"
+  },
+  "Function with Guard": {
+    "prefix": "fng",
+    "body": ["fn(${1:args}) if ${2:guard} {", "\t${3:// body}", "}"],
+    "description": "Create a function with guard"
+  },
+  "Match Block": {
+    "prefix": "match",
+    "body": [
+      "match ${1:value} {",
+      "\t| ${2:pattern} -> ${3:result};",
+      "\t| _ -> ${4:default};",
+      "}"
+    ],
+    "description": "Create a match block"
+  },
+  "Match with Guard": {
+    "prefix": "matchg",
+    "body": [
+      "match ${1:value} {",
+      "\t| ${2:pattern} if ${3:guard} -> ${4:result};",
+      "\t| _ -> ${5:default};",
+      "}"
+    ],
+    "description": "Create a match block with guard"
+  },
+  "If Statement": {
+    "prefix": "if",
+    "body": ["if (${1:condition}) {", "\t${2:// then}", "}"],
+    "description": "Create an if statement"
+  },
+  "If-Else Statement": {
+    "prefix": "ife",
+    "body": [
+      "if (${1:condition}) {",
+      "\t${2:// then}",
+      "} else {",
+      "\t${3:// else}",
+      "}"
+    ],
+    "description": "Create an if-else statement"
+  },
+  "While Loop": {
+    "prefix": "while",
+    "body": ["while (${1:condition}) {", "\t${2:// body}", "}"],
+    "description": "Create a while loop"
+  },
+  "For Loop": {
+    "prefix": "for",
+    "body": ["for (${1:item} in ${2:iterable}) {", "\t${3:// body}", "}"],
+    "description": "Create a for loop"
+  },
+  "Try-Catch": {
+    "prefix": "try",
+    "body": [
+      "try {",
+      "\t${1:// try body}",
+      "} catch (${2:e}) {",
+      "\t${3:// catch body}",
+      "}"
+    ],
+    "description": "Create a try-catch block"
+  },
+  "Actor Protocol": {
+    "prefix": "actor",
+    "body": [
+      "${1:ActorName} := %{",
+      "\tstart: fn() {",
+      "\t\twhile (true) {",
+      "\t\t\tmsg := Actor.receive();",
+      "\t\t\t",
+      "\t\t\tif (msg.0 == :${2:message_type}) {",
+      "\t\t\t\t${3:// handle message}",
+      "\t\t\t} else if (msg.0 == :stop) {",
+      "\t\t\t\tbreak;",
+      "\t\t\t}",
+      "\t\t}",
+      "\t}",
+      "};"
+    ],
+    "description": "Create an actor protocol"
+  },
+  "Spawn Actor": {
+    "prefix": "spawn",
+    "body": ["${1:pid} := Actor.spawn(${2:ActorProtocol});"],
+    "description": "Spawn an actor"
+  },
+  "Send Message": {
+    "prefix": "send",
+    "body": ["Actor.send(${1:pid}, (${2::message}, ${3:data}));"],
+    "description": "Send a message to an actor"
+  },
+  "Receive Message": {
+    "prefix": "recv",
+    "body": ["${1:msg} := Actor.receive();"],
+    "description": "Receive a message"
+  },
+  "Selective Receive": {
+    "prefix": "recvs",
+    "body": [
+      "${1:msg} := Actor.receive_select(fn(${2:m}) {",
+      "\treturn ${3:m.0 == :target};",
+      "});"
+    ],
+    "description": "Selective receive with predicate"
+  },
+  "Map Literal": {
+    "prefix": "map",
+    "body": ["%{", "\t${1:key}: ${2:value}", "}"],
+    "description": "Create a map literal"
+  },
+  "Array Literal": {
+    "prefix": "arr",
+    "body": ["[${1:elements}]"],
+    "description": "Create an array literal"
+  },
+  "Tuple Literal": {
+    "prefix": "tup",
+    "body": ["(${1:elements})"],
+    "description": "Create a tuple literal"
+  },
+  "Bitstring Pattern": {
+    "prefix": "bits",
+    "body": ["<% ${1:x}::${2:8}, ${3:y}::${4:16} %>"],
+    "description": "Create a bitstring pattern"
+  },
+  "Binary Literal": {
+    "prefix": "bin",
+    "body": ["<<${1:bytes}>>"],
+    "description": "Create a binary literal"
+  },
+  "Enum Variant": {
+    "prefix": "enum",
+    "body": [":${1:Tag}(${2:payload})"],
+    "description": "Create an enum variant (tagged tuple)"
+  },
+  "Using Import": {
+    "prefix": "using",
+    "body": ["using ${1:Module};"],
+    "description": "Import a module"
+  },
+  "System Print": {
+    "prefix": "print",
+    "body": ["System.print(${1:value});"],
+    "description": "Print to console"
+  },
+  "System Assert": {
+    "prefix": "assert",
+    "body": ["System.assert(${1:condition});"],
+    "description": "Assert a condition"
+  },
+  "Promise": {
+    "prefix": "promise",
+    "body": [
+      "${1:p} := Promise.new(fn() {",
+      "\t${2:// async work}",
+      "\treturn ${3:result};",
+      "});",
+      "${4:result} := ${1:p}.await();"
+    ],
+    "description": "Create and await a promise"
+  }
+}
