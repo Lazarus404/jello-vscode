@@ -22,6 +22,11 @@
         {
           "name": "comment.line.double-slash.jello",
           "match": "//.*$"
+        },
+        {
+          "name": "comment.block.jello",
+          "begin": "/\\*",
+          "end": "\\*/"
         }
       ]
     },
