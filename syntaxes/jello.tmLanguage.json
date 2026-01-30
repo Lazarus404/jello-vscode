@@ -34,11 +34,11 @@
       "patterns": [
         {
           "name": "keyword.control.jello",
-          "match": "\\b(if|else|do|while|for|break|continue|return|match|when|as|try|catch|throw|using|import|export|from|package)\\b"
+          "match": "\\b(if|else|do|while|break|continue|return|match|when|try|catch|throw|using)\\b"
         },
         {
           "name": "keyword.other.jello",
-          "match": "\\b(fn|as)\\b"
+          "match": "\\b(fn|as|package|import|export|from)\\b"
         },
         {
           "name": "variable.language.jello",
