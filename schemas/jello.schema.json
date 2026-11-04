@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Jello project manifest",
+  "description": "jello.json: what jelloc, jelloc run, jelloc test and deps.get read about a project.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The project's name. It names the module jelloc writes to build/, and deps.get needs it.",
+      "pattern": "^[^/]+$"
+    },
+    "version": {
+      "type": "string",
+      "description": "The project's version; a package's manifest needs it.",
+      "pattern": "^\\d+\\.\\d+\\.\\d+",
+      "default": "0.1.0"
+    },
+    "entry": {
+      "type": "string",
+      "description": "The entry module, which jelloc and jelloc run compile when given no file. Relative to src.",
+      "default": "Main.jello"
+    },
+    "src": {
+      "type": "string",
+      "description": "The source directory, a root for imports.",
+      "default": "src"
+    },
+    "test": {
+      "type": "object",
+      "description": "Where the tests are.",
+      "properties": {
+        "dirs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "The test directories jelloc test searches for *.test.jello files.",
+          "default": ["tests"]
+        }
+      },
+      "additionalProperties": true
+    },
+    "dependencies": {
+      "type": "object",
+      "description": "Each package the project uses, by name.",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "A released version: the archive of that tag of the package's repository.",
+            "pattern": "^\\d+\\.\\d+\\.\\d+"
+          },
+          {
+            "type": "object",
+            "description": "A tag of a GitHub repository.",
+            "properties": {
+              "github": { "type": "string", "pattern": "^[^/]+/[^/]+$", "description": "owner/repo" },
+              "tag": { "type": "string" }
+            },
+            "required": ["github", "tag"],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "description": "A commit of a GitHub repository.",
+            "properties": {
+              "github": { "type": "string", "pattern": "^[^/]+/[^/]+$", "description": "owner/repo" },
+              "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" }
+            },
+            "required": ["github", "commit"],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "description": "A directory on disk, relative to the project; only in the project's own jello.json.",
+            "properties": {
+              "path": { "type": "string" }
+            },
+            "required": ["path"],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "package_paths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Directories that also hold packages, as <dir>/<name>/."
+    },
+    "jdll": {
+      "type": "string",
+      "description": "The directory of the project's native libraries.",
+      "default": "jdll"
+    }
+  },
+  "additionalProperties": true
+}

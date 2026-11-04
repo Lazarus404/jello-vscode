@@ -1,0 +1,346 @@
+{
+  "name": "jello-language",
+  "displayName": "Jello",
+  "description": "Jello for VS Code: highlighting, snippets, completion, hover, diagnostics, run and test",
+  "version": "0.2.1",
+  "publisher": "jello",
+  "license": "BSD-3-Clause",
+  "icon": "images/jello.png",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Testing"
+  ],
+  "keywords": [
+    "jello",
+    "jelloc",
+    "prototypes",
+    "functional"
+  ],
+  "activationEvents": [
+    "onLanguage:jello",
+    "workspaceContains:**/jello.json"
+  ],
+  "main": "./out/src/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "jello",
+        "aliases": [
+          "Jello",
+          "jello"
+        ],
+        "extensions": [
+          ".jello"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./images/jello-file.svg",
+          "dark": "./images/jello-file.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "jello",
+        "scopeName": "source.jello",
+        "path": "./syntaxes/jello.tmLanguage.json"
+      },
+      {
+        "scopeName": "markdown.jello.codeblock",
+        "path": "./syntaxes/jello-markdown.tmLanguage.json",
+        "injectTo": [
+          "text.html.markdown"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.jello": "jello"
+        }
+      }
+    ],
+    "snippets": [
+      {
+        "language": "jello",
+        "path": "./snippets/jello.code-snippets"
+      }
+    ],
+    "jsonValidation": [
+      {
+        "fileMatch": "jello.json",
+        "url": "./schemas/jello.schema.json"
+      }
+    ],
+    "configurationDefaults": {
+      "[jello]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.rulers": [
+          100
+        ]
+      }
+    },
+    "configuration": {
+      "title": "Jello",
+      "properties": {
+        "jello.jelloc.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Path to `jelloc`. Empty finds it in a Jello checkout's own `vm/build`, then `$JELLO_ROOT/bin`, `PATH` and the installed release (`~/.jello/current/bin`). `jello` and `jlo_tool` are looked for beside it."
+        },
+        "jello.std.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "The standard library directory. Empty uses `JELLO_STD_PATH`, then `std` beside the toolchain, then the workspace's `stdlib`."
+        },
+        "jello.paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Extra source roots, passed to `jelloc` as `--path`, after the project's own. Relative paths are taken from the workspace folder."
+        },
+        "jello.check.onSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Check a Jello file with the compiler when it is opened or saved."
+        },
+        "jello.check.onType": {
+          "type": "boolean",
+          "default": false,
+          "description": "Also check while typing, from a copy of the unsaved buffer (debounced)."
+        },
+        "jello.check.timeoutMs": {
+          "type": "number",
+          "default": 10000,
+          "minimum": 500,
+          "description": "How long a compiler run may take before it is stopped, in milliseconds."
+        },
+        "jello.hoverTypes": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the compiler's inferred types on hover, from a typed listing made after a clean check."
+        },
+        "jello.codeLens": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show Run code lenses above tests."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "jello.runFile",
+        "title": "Run File",
+        "category": "Jello",
+        "icon": "$(play)"
+      },
+      {
+        "command": "jello.runProject",
+        "title": "Run Project",
+        "category": "Jello",
+        "icon": "$(run-all)"
+      },
+      {
+        "command": "jello.runTests",
+        "title": "Run Tests",
+        "category": "Jello"
+      },
+      {
+        "command": "jello.runTestsInFile",
+        "title": "Run Tests in File",
+        "category": "Jello"
+      },
+      {
+        "command": "jello.build",
+        "title": "Build",
+        "category": "Jello"
+      },
+      {
+        "command": "jello.depsGet",
+        "title": "Fetch Dependencies",
+        "category": "Jello"
+      },
+      {
+        "command": "jello.newProject",
+        "title": "New Project…",
+        "category": "Jello"
+      },
+      {
+        "command": "jello.explain",
+        "title": "Explain Error Code…",
+        "category": "Jello"
+      },
+      {
+        "command": "jello.check",
+        "title": "Check File",
+        "category": "Jello"
+      },
+      {
+        "command": "jello.showTokens",
+        "title": "Show Tokens for File",
+        "category": "Jello"
+      },
+      {
+        "command": "jello.showHir",
+        "title": "Show HIR for File",
+        "category": "Jello"
+      },
+      {
+        "command": "jello.showIr",
+        "title": "Show IR for File",
+        "category": "Jello"
+      },
+      {
+        "command": "jello.showJlo",
+        "title": "Show JLO for File",
+        "category": "Jello"
+      },
+      {
+        "command": "jello.locateToolchain",
+        "title": "Locate Toolchain…",
+        "category": "Jello"
+      }
+    ],
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "jello.runFile",
+          "when": "editorLangId == jello && !jello.isTestFile",
+          "group": "navigation@1"
+        },
+        {
+          "command": "jello.runProject",
+          "when": "editorLangId == jello && jello.inProject",
+          "group": "navigation@2"
+        },
+        {
+          "command": "jello.runTestsInFile",
+          "when": "editorLangId == jello && jello.isTestFile",
+          "group": "navigation@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "jello.runFile",
+          "when": "editorLangId == jello"
+        },
+        {
+          "command": "jello.runTestsInFile",
+          "when": "editorLangId == jello && jello.isTestFile"
+        },
+        {
+          "command": "jello.check",
+          "when": "editorLangId == jello"
+        },
+        {
+          "command": "jello.showTokens",
+          "when": "editorLangId == jello"
+        },
+        {
+          "command": "jello.showHir",
+          "when": "editorLangId == jello"
+        },
+        {
+          "command": "jello.showIr",
+          "when": "editorLangId == jello"
+        },
+        {
+          "command": "jello.showJlo",
+          "when": "editorLangId == jello"
+        }
+      ]
+    },
+    "taskDefinitions": [
+      {
+        "type": "jello",
+        "required": [
+          "command"
+        ],
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "build",
+              "run",
+              "test",
+              "deps.get"
+            ],
+            "description": "The jelloc command to run."
+          },
+          "args": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Extra arguments for jelloc."
+          }
+        }
+      }
+    ],
+    "problemMatchers": [
+      {
+        "name": "jelloc",
+        "label": "Jello compiler diagnostics",
+        "owner": "jello",
+        "source": "jelloc",
+        "fileLocation": [
+          "autoDetect",
+          "${workspaceFolder}"
+        ],
+        "pattern": {
+          "regexp": "^(.+?):(\\d+):(\\d+): (?!note: |jello(?:vm)?: )(?:(warning): )?(.*?)(?: \\[(E\\d{4})\\])?$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "message": 5,
+          "code": 6
+        },
+        "severity": "error"
+      },
+      {
+        "name": "jello-trap",
+        "label": "Jello runtime traps",
+        "owner": "jello",
+        "source": "jello",
+        "severity": "error",
+        "fileLocation": [
+          "autoDetect",
+          "${workspaceFolder}"
+        ],
+        "pattern": {
+          "regexp": "^(.+?):(\\d+):(\\d+): jello(?:vm)?: (trap .*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "message": 4
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "gen": "node scripts/gen-data.mjs",
+    "test": "npm run compile && node scripts/check-drift.mjs && node scripts/grammar-sweep.mjs && node --test \"out/test/*.test.js\" && vscode-tmgrammar-test \"test/grammar/*.jello\"",
+    "integration": "npm run compile && node out/test/integration/run.js",
+    "sweep": "node scripts/grammar-sweep.mjs",
+    "package": "vsce package --no-dependencies --allow-missing-repository",
+    "vscode:prepublish": "npm run compile",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"scripts/*.mjs\" syntaxes/jello.grammar.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^3.2.1",
+    "prettier": "^3.9.10",
+    "typescript": "^5.3.3",
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.1.0",
+    "vscode-tmgrammar-test": "^0.1.3"
+  }
+}

@@ -1,0 +1,44 @@
+// SYNTAX TEST "source.jello" "comments and literals"
+/** Doubles `n`.
+// <- comment.block.documentation.jello
+//          ^^^ markup.inline.raw.doc.jello
+ * @param n  a number */
+// ^^^^^^ storage.type.class.doc.jello
+//        ^ variable.parameter.doc.jello
+# a hash comment
+// <- comment.line.number-sign.jello
+let a = 0xFF_FFu32 + 1i64 + 0b1010 + 0o17;
+//      ^^^^^^^ constant.numeric.integer.jello
+//             ^^^ storage.type.numeric.suffix.jello
+//                    ^^^ storage.type.numeric.suffix.jello
+let b = 1.5e-3f32 + .5 + 2. + 1e3;
+//      ^^^^^^ constant.numeric.float.jello
+//            ^^^ storage.type.numeric.suffix.jello
+//                  ^^ constant.numeric.float.jello
+//                       ^^ constant.numeric.float.jello
+//                            ^^^ constant.numeric.float.jello
+let p = pair.1.0;
+//           ^ variable.other.property.jello
+//             ^ variable.other.property.jello
+let s = "a\t\x41\u{1F600}\q" + 'it' + "A".code;
+//        ^^ constant.character.escape.jello
+//          ^^^^ constant.character.escape.jello
+//              ^^^^^^^^^ constant.character.escape.jello
+//                       ^^ invalid.illegal.escape.jello
+//                              ^^ string.quoted.single.jello
+//                                        ^^^^ support.variable.property.code.jello
+let t = `sum ${a + b} \$ {x}`;
+//      ^^^^^ string.template.jello
+//           ^^ punctuation.definition.template-expression.begin.jello
+//             ^ variable.other.readwrite.jello
+//                    ^^ constant.character.escape.jello
+let r = ~r/a\/b[0-9]+$/iU;
+//      ^^ punctuation.definition.regexp.sigil.jello
+//          ^^ constant.character.escape.regexp.jello
+//             ^^^^^ constant.other.character-class.regexp.jello
+//                     ^^ keyword.other.flag.regexp.jello
+let o = { a: :ok, b:c, k: cond ? :yes : :no };
+//           ^^^ constant.other.symbol.atom.jello
+//                  ^ - constant.other.symbol.atom.jello
+//                               ^^^^ constant.other.symbol.atom.jello
+//                                      ^^^ constant.other.symbol.atom.jello

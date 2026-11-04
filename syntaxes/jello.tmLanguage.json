@@ -1,0 +1,1048 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Jello",
+  "scopeName": "source.jello",
+  "fileTypes": [
+    "jello"
+  ],
+  "patterns": [
+    {
+      "include": "#statements"
+    }
+  ],
+  "repository": {
+    "statements": {
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#strings"
+        },
+        {
+          "include": "#regexp"
+        },
+        {
+          "include": "#atoms"
+        },
+        {
+          "include": "#numbers"
+        },
+        {
+          "include": "#modules"
+        },
+        {
+          "include": "#declarations"
+        },
+        {
+          "include": "#for-header"
+        },
+        {
+          "include": "#bits"
+        },
+        {
+          "include": "#layout"
+        },
+        {
+          "include": "#abstract"
+        },
+        {
+          "include": "#macros"
+        },
+        {
+          "include": "#members"
+        },
+        {
+          "include": "#keywords"
+        },
+        {
+          "include": "#types"
+        },
+        {
+          "include": "#calls"
+        },
+        {
+          "include": "#operators"
+        },
+        {
+          "include": "#blocks"
+        },
+        {
+          "include": "#punctuation"
+        },
+        {
+          "include": "#names"
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.block.documentation.jello",
+          "begin": "/\\*\\*(?![*/])",
+          "end": "\\*/",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.begin.jello"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.end.jello"
+            }
+          },
+          "patterns": [
+            {
+              "match": "(@(?:param|return|returns|throws|see|note))\\b(?:\\s+([_A-Za-z][_A-Za-z0-9]*))?",
+              "captures": {
+                "1": {
+                  "name": "storage.type.class.doc.jello"
+                },
+                "2": {
+                  "name": "variable.parameter.doc.jello"
+                }
+              }
+            },
+            {
+              "name": "markup.inline.raw.doc.jello",
+              "match": "`[^`\\n]*`"
+            }
+          ]
+        },
+        {
+          "name": "comment.block.jello",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.begin.jello"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.end.jello"
+            }
+          }
+        },
+        {
+          "name": "comment.line.double-slash.jello",
+          "begin": "//",
+          "end": "$",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.jello"
+            }
+          }
+        },
+        {
+          "name": "comment.line.number-sign.jello",
+          "begin": "#",
+          "end": "$",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.jello"
+            }
+          }
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.jello",
+          "begin": "\"",
+          "end": "(\")|$",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.jello"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.string.end.jello"
+            }
+          },
+          "patterns": [
+            {
+              "name": "constant.character.escape.jello",
+              "match": "\\\\(?:[0abtnvfr\"'`\\\\]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{[0-9A-Fa-f]{1,6}\\})"
+            },
+            {
+              "name": "invalid.illegal.escape.jello",
+              "match": "\\\\.?"
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.jello",
+          "begin": "'",
+          "end": "(')|$",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.begin.jello"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.string.end.jello"
+            }
+          },
+          "patterns": [
+            {
+              "name": "constant.character.escape.jello",
+              "match": "\\\\(?:[0abtnvfr\"'`\\\\]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{[0-9A-Fa-f]{1,6}\\})"
+            },
+            {
+              "name": "invalid.illegal.escape.jello",
+              "match": "\\\\.?"
+            }
+          ]
+        },
+        {
+          "name": "string.template.jello",
+          "begin": "`",
+          "end": "`",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.template.begin.jello"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.template.end.jello"
+            }
+          },
+          "patterns": [
+            {
+              "name": "constant.character.escape.jello",
+              "match": "\\\\(?:[0abtnvfr\"'`\\\\$]|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|u\\{[0-9A-Fa-f]{1,6}\\})"
+            },
+            {
+              "name": "invalid.illegal.escape.jello",
+              "match": "\\\\.?"
+            },
+            {
+              "name": "meta.template.expression.jello",
+              "contentName": "meta.embedded.line.jello",
+              "begin": "\\$\\{",
+              "end": "\\}",
+              "beginCaptures": {
+                "0": {
+                  "name": "punctuation.definition.template-expression.begin.jello"
+                }
+              },
+              "endCaptures": {
+                "0": {
+                  "name": "punctuation.definition.template-expression.end.jello"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#statements"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "match": "(?<=[\"'])(\\.)(code)\\b",
+          "captures": {
+            "1": {
+              "name": "punctuation.accessor.jello"
+            },
+            "2": {
+              "name": "support.variable.property.code.jello"
+            }
+          }
+        }
+      ]
+    },
+    "regexp": {
+      "name": "string.regexp.jello",
+      "begin": "(~r)(/)",
+      "end": "(/)([imsxU]*)|$",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.regexp.sigil.jello"
+        },
+        "2": {
+          "name": "punctuation.definition.string.begin.jello"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.string.end.jello"
+        },
+        "2": {
+          "name": "keyword.other.flag.regexp.jello"
+        }
+      },
+      "patterns": [
+        {
+          "name": "constant.character.escape.regexp.jello",
+          "match": "\\\\."
+        },
+        {
+          "name": "constant.other.character-class.regexp.jello",
+          "match": "\\[(?:\\\\.|[^\\]\\\\/])*\\]"
+        },
+        {
+          "name": "keyword.operator.quantifier.regexp.jello",
+          "match": "[*+?]|\\{\\d+(?:,\\d*)?\\}"
+        },
+        {
+          "name": "keyword.control.anchor.regexp.jello",
+          "match": "[\\^$|]"
+        }
+      ]
+    },
+    "atoms": {
+      "name": "constant.other.symbol.atom.jello",
+      "match": "(?<![\\w)\\]\"'`])(:)[_A-Za-z][_A-Za-z0-9]*",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.symbol.jello"
+        }
+      }
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.jello",
+          "match": "(?<![\\w.])(?:\\d+\\.\\d+(?:[eE][+-]?\\d+)?|\\d+[eE][+-]?\\d+|\\d+\\.(?![\\w.])|(?<![)\\]])\\.\\d+(?:[eE][+-]?\\d+)?)(f16|f32|f64)?(?![\\w.])",
+          "captures": {
+            "1": {
+              "name": "storage.type.numeric.suffix.jello"
+            }
+          }
+        },
+        {
+          "name": "constant.numeric.integer.jello",
+          "match": "(?<![\\w.])(?:0[xX][0-9A-Fa-f_]+|0[bB][01_]+|0[oO][0-7_]+|\\d+)([iu](?:8|16|32|64)|f(?:16|32|64))?(?!\\w)",
+          "captures": {
+            "1": {
+              "name": "storage.type.numeric.suffix.jello"
+            }
+          }
+        }
+      ]
+    },
+    "modules": {
+      "patterns": [
+        {
+          "match": "\\b(package)\\s+([_A-Za-z][_A-Za-z0-9]*(?:\\s*\\.\\s*[_A-Za-z][_A-Za-z0-9]*)*)",
+          "captures": {
+            "1": {
+              "name": "keyword.control.import.jello"
+            },
+            "2": {
+              "name": "entity.name.namespace.jello"
+            }
+          }
+        },
+        {
+          "name": "meta.import.jello",
+          "begin": "\\b(import|load)\\b",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.import.jello"
+            }
+          },
+          "end": ";",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.terminator.statement.jello"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comments"
+            },
+            {
+              "match": "\\b(from)\\s+([_A-Za-z][_A-Za-z0-9]*(?:\\s*\\.\\s*[_A-Za-z][_A-Za-z0-9]*)*)",
+              "captures": {
+                "1": {
+                  "name": "keyword.control.import.jello"
+                },
+                "2": {
+                  "name": "entity.name.namespace.jello"
+                }
+              }
+            },
+            {
+              "match": "\\b(as)\\s+([_A-Za-z][_A-Za-z0-9]*)",
+              "captures": {
+                "1": {
+                  "name": "keyword.control.import.jello"
+                },
+                "2": {
+                  "name": "variable.other.alias.jello"
+                }
+              }
+            },
+            {
+              "name": "keyword.control.import.jello",
+              "match": "\\btype\\b"
+            },
+            {
+              "name": "entity.name.namespace.jello",
+              "match": "\\b[_A-Za-z][_A-Za-z0-9]*(?:\\s*\\.\\s*[_A-Za-z][_A-Za-z0-9]*)+"
+            },
+            {
+              "name": "entity.name.type.jello",
+              "match": "\\b[A-Z][_A-Za-z0-9]*\\b"
+            },
+            {
+              "name": "variable.other.readwrite.import.jello",
+              "match": "[_A-Za-z][_A-Za-z0-9]*"
+            },
+            {
+              "name": "punctuation.separator.comma.jello",
+              "match": ","
+            },
+            {
+              "name": "punctuation.definition.block.jello",
+              "match": "[{}]"
+            }
+          ]
+        }
+      ]
+    },
+    "declarations": {
+      "patterns": [
+        {
+          "match": "\\b(?:(export)\\s+)?(let|const)\\s+([_A-Za-z][_A-Za-z0-9]*)(?=\\s*(?:<[^=;]*>)?\\s*(?::[^=;]*)?=\\s*(?:method\\s+)?fn\\b)",
+          "captures": {
+            "1": {
+              "name": "storage.modifier.export.jello"
+            },
+            "2": {
+              "name": "storage.type.jello"
+            },
+            "3": {
+              "name": "entity.name.function.jello"
+            }
+          }
+        },
+        {
+          "match": "\\b(?:(export)\\s+)?(const)\\s+([_A-Za-z][_A-Za-z0-9]*)",
+          "captures": {
+            "1": {
+              "name": "storage.modifier.export.jello"
+            },
+            "2": {
+              "name": "storage.type.jello"
+            },
+            "3": {
+              "name": "variable.other.constant.jello"
+            }
+          }
+        },
+        {
+          "match": "\\b(?:(export)\\s+)?(let)\\s+([_A-Za-z][_A-Za-z0-9]*)\\b",
+          "captures": {
+            "1": {
+              "name": "storage.modifier.export.jello"
+            },
+            "2": {
+              "name": "storage.type.jello"
+            },
+            "3": {
+              "name": "variable.other.declaration.jello"
+            }
+          }
+        },
+        {
+          "name": "meta.enum.jello",
+          "begin": "\\b(?:(export)\\s+)?(enum)\\s+([_A-Za-z][_A-Za-z0-9]*)",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.modifier.export.jello"
+            },
+            "2": {
+              "name": "storage.type.jello"
+            },
+            "3": {
+              "name": "entity.name.type.enum.jello"
+            }
+          },
+          "end": "(?<=\\})",
+          "patterns": [
+            {
+              "include": "#comments"
+            },
+            {
+              "include": "#type-parameters"
+            },
+            {
+              "begin": "\\{",
+              "end": "\\}",
+              "beginCaptures": {
+                "0": {
+                  "name": "punctuation.definition.block.jello"
+                }
+              },
+              "endCaptures": {
+                "0": {
+                  "name": "punctuation.definition.block.jello"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#comments"
+                },
+                {
+                  "match": "(?:(?<=[{;])|^)\\s*([A-Z][_A-Za-z0-9]*)\\b",
+                  "captures": {
+                    "1": {
+                      "name": "variable.other.enummember.jello"
+                    }
+                  }
+                },
+                {
+                  "include": "#statements"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "match": "\\b(?:(export)\\s+)?(typedef)\\s+([_A-Za-z][_A-Za-z0-9]*)",
+          "captures": {
+            "1": {
+              "name": "storage.modifier.export.jello"
+            },
+            "2": {
+              "name": "storage.type.jello"
+            },
+            "3": {
+              "name": "entity.name.type.jello"
+            }
+          }
+        },
+        {
+          "name": "meta.prototype.jello",
+          "begin": "\\b(?:(export)\\s+)?(prototype)\\s+([_A-Za-z][_A-Za-z0-9]*)",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.modifier.export.jello"
+            },
+            "2": {
+              "name": "storage.type.jello"
+            },
+            "3": {
+              "name": "entity.name.type.class.jello"
+            }
+          },
+          "end": "(?<=\\})",
+          "patterns": [
+            {
+              "include": "#comments"
+            },
+            {
+              "include": "#type-parameters"
+            },
+            {
+              "begin": "\\{",
+              "end": "\\}",
+              "beginCaptures": {
+                "0": {
+                  "name": "punctuation.definition.block.jello"
+                }
+              },
+              "endCaptures": {
+                "0": {
+                  "name": "punctuation.definition.block.jello"
+                }
+              },
+              "patterns": [
+                {
+                  "include": "#comments"
+                },
+                {
+                  "match": "(?:(?<=[{;])|^)\\s*([_A-Za-z][_A-Za-z0-9]*)\\s*(?=\\()",
+                  "captures": {
+                    "1": {
+                      "name": "entity.name.function.member.jello"
+                    }
+                  }
+                },
+                {
+                  "match": "(?:(?<=[{;])|^)\\s*([_A-Za-z][_A-Za-z0-9]*)\\s*(?=:)",
+                  "captures": {
+                    "1": {
+                      "name": "variable.other.property.jello"
+                    }
+                  }
+                },
+                {
+                  "include": "#statements"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "match": "\\b(?:(export)\\s+)?(macro)\\s+([_A-Za-z][_A-Za-z0-9]*)",
+          "captures": {
+            "1": {
+              "name": "storage.modifier.export.jello"
+            },
+            "2": {
+              "name": "storage.type.jello"
+            },
+            "3": {
+              "name": "entity.name.function.macro.jello"
+            }
+          }
+        },
+        {
+          "match": "\\b(method)\\s+(fn)\\b",
+          "captures": {
+            "1": {
+              "name": "storage.modifier.method.jello"
+            },
+            "2": {
+              "name": "storage.type.jello"
+            }
+          }
+        },
+        {
+          "name": "storage.modifier.export.jello",
+          "match": "\\bexport\\b"
+        }
+      ]
+    },
+    "type-parameters": {
+      "begin": "<",
+      "end": ">",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.typeparameters.begin.jello"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.typeparameters.end.jello"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#types"
+        },
+        {
+          "include": "#operators"
+        },
+        {
+          "include": "#punctuation"
+        }
+      ]
+    },
+    "for-header": {
+      "begin": "\\b(for)\\s*(\\()",
+      "end": "\\)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.jello"
+        },
+        "2": {
+          "name": "punctuation.definition.parameters.begin.jello"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.parameters.end.jello"
+        }
+      },
+      "patterns": [
+        {
+          "name": "keyword.control.in.jello",
+          "match": "\\bin\\b"
+        },
+        {
+          "include": "#parens"
+        },
+        {
+          "include": "#statements"
+        }
+      ]
+    },
+    "bits": {
+      "begin": "\\b(bits)\\s*(\\[)",
+      "end": "\\]",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.other.literal.jello"
+        },
+        "2": {
+          "name": "punctuation.definition.bits.begin.jello"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.bits.end.jello"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#segments"
+        },
+        {
+          "include": "#brackets"
+        },
+        {
+          "include": "#statements"
+        }
+      ]
+    },
+    "layout": {
+      "begin": "\\b(bytes)(-)(layout)\\s*(\\{)",
+      "end": "\\}",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.type.layout.jello"
+        },
+        "3": {
+          "name": "storage.type.layout.jello"
+        },
+        "4": {
+          "name": "punctuation.definition.block.jello"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.block.jello"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#segments"
+        },
+        {
+          "include": "#statements"
+        }
+      ]
+    },
+    "abstract": {
+      "match": "(?<==)\\s*\\b(abstract)\\b(?=\\s*;)",
+      "captures": {
+        "1": {
+          "name": "storage.type.abstract.jello"
+        }
+      }
+    },
+    "segments": {
+      "patterns": [
+        {
+          "match": "\\b(?:[1-8]|16|32|[uUiI](?:8|16|32|64)|[fF](?:32|64)|rest|bits)\\b(?=\\s*(?:\\.\\s*(?:le|be)\\b)?\\s*[(;,\\]])",
+          "name": "support.type.segment.jello"
+        },
+        {
+          "match": "(\\.)\\s*(le|be)\\b",
+          "captures": {
+            "1": {
+              "name": "punctuation.accessor.jello"
+            },
+            "2": {
+              "name": "storage.modifier.endian.jello"
+            }
+          }
+        }
+      ]
+    },
+    "macros": {
+      "patterns": [
+        {
+          "match": "\\b(quote)\\s*(\\.)\\s*(expr|stmts|stmt|pat|type)\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.other.quote.jello"
+            },
+            "2": {
+              "name": "punctuation.accessor.jello"
+            },
+            "3": {
+              "name": "keyword.other.quote.jello"
+            }
+          }
+        },
+        {
+          "name": "keyword.other.unquote.jello",
+          "match": "\\bunquote\\b(?=\\s*\\()"
+        }
+      ]
+    },
+    "members": {
+      "patterns": [
+        {
+          "match": "(?<=[\\w)\\]])(\\.)([A-Z][_A-Za-z0-9]*)\\b",
+          "captures": {
+            "1": {
+              "name": "punctuation.accessor.jello"
+            },
+            "2": {
+              "name": "variable.other.enummember.jello"
+            }
+          }
+        },
+        {
+          "match": "(\\.)\\s*([_A-Za-z][_A-Za-z0-9]*)(?=\\s*(?:<[^<>()=;]*>)?\\s*\\()",
+          "captures": {
+            "1": {
+              "name": "punctuation.accessor.jello"
+            },
+            "2": {
+              "name": "entity.name.function.member.jello"
+            }
+          }
+        },
+        {
+          "match": "(\\.)\\s*([_A-Za-z][_A-Za-z0-9]*|\\d+)",
+          "captures": {
+            "1": {
+              "name": "punctuation.accessor.jello"
+            },
+            "2": {
+              "name": "variable.other.property.jello"
+            }
+          }
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.jello",
+          "match": "\\b(?:if|else|while|do|for|break|continue|return|match|when|with|try|catch|throw)\\b"
+        },
+        {
+          "name": "storage.type.jello",
+          "match": "\\b(?:let|const|fn|enum|typedef|prototype|macro)\\b"
+        },
+        {
+          "name": "keyword.control.import.jello",
+          "match": "\\b(?:package|import|export|from|type|load)\\b"
+        },
+        {
+          "name": "keyword.operator.expression.jello",
+          "match": "\\b(?:is|as|new)\\b"
+        },
+        {
+          "name": "constant.language.jello",
+          "match": "\\b(?:true|false|null)\\b"
+        },
+        {
+          "name": "variable.language.jello",
+          "match": "\\b(?:this|super)\\b"
+        },
+        {
+          "name": "keyword.other.reserved.jello",
+          "match": "\\b(?:await)\\b"
+        },
+        {
+          "name": "keyword.other.literal.jello",
+          "match": "\\b(?:list|bits)\\b(?=\\s*\\[)"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "support.class.namespace.jello",
+          "match": "\\b(?:Std|System|Math|Float|Integer|Array|Bytes|List|Object|Tuple|Atom|Enum|Function)\\b(?=\\s*\\.)"
+        },
+        {
+          "name": "support.type.primitive.jello",
+          "match": "\\b(?:I8|I16|I32|I64|U8|U16|U32|U64|F16|F32|F64|Bool|Bytes|Dynamic|Null|Atom|Object|Array|List|Tuple|ByteBuffer)\\b"
+        },
+        {
+          "name": "variable.other.constant.jello",
+          "match": "\\b[A-Z][A-Z0-9_]+\\b"
+        },
+        {
+          "name": "entity.name.type.jello",
+          "match": "\\b[A-Z][_A-Za-z0-9]*\\b"
+        }
+      ]
+    },
+    "calls": {
+      "match": "\\b([_A-Za-z][_A-Za-z0-9]*)(?=\\s*(?:<[^<>()=;]*>)?\\s*\\()",
+      "captures": {
+        "1": {
+          "name": "entity.name.function.call.jello"
+        }
+      }
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.pipeline.jello",
+          "match": "\\|>"
+        },
+        {
+          "name": "variable.language.pipeline.jello",
+          "match": "%(?=\\s*[),.\\[\\];])"
+        },
+        {
+          "name": "keyword.operator.coalesce.jello",
+          "match": "\\?\\?"
+        },
+        {
+          "name": "keyword.operator.spread.jello",
+          "match": "\\.\\.\\."
+        },
+        {
+          "name": "keyword.operator.arrow.jello",
+          "match": "->"
+        },
+        {
+          "name": "punctuation.separator.arrow.jello",
+          "match": "=>"
+        },
+        {
+          "name": "keyword.operator.generator.jello",
+          "match": "<-"
+        },
+        {
+          "name": "keyword.operator.assignment.compound.jello",
+          "match": "<<=|>>=|[+\\-*/%&|^]="
+        },
+        {
+          "name": "keyword.operator.increment.jello",
+          "match": "\\+\\+|--"
+        },
+        {
+          "name": "keyword.operator.comparison.jello",
+          "match": "==|!=|<=|>="
+        },
+        {
+          "name": "keyword.operator.logical.jello",
+          "match": "&&|\\|\\||!"
+        },
+        {
+          "name": "keyword.operator.bitwise.shift.jello",
+          "match": "<<|>>"
+        },
+        {
+          "name": "keyword.operator.pin.jello",
+          "match": "\\^(?=[_A-Za-z])"
+        },
+        {
+          "name": "keyword.operator.assignment.jello",
+          "match": "="
+        },
+        {
+          "name": "keyword.operator.relational.jello",
+          "match": "[<>]"
+        },
+        {
+          "name": "keyword.operator.arithmetic.jello",
+          "match": "[+\\-*/%]"
+        },
+        {
+          "name": "keyword.operator.bitwise.jello",
+          "match": "[&|^]"
+        },
+        {
+          "name": "keyword.operator.ternary.jello",
+          "match": "\\?"
+        }
+      ]
+    },
+    "blocks": {
+      "begin": "\\{",
+      "end": "\\}",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.block.jello"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.block.jello"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#statements"
+        }
+      ]
+    },
+    "parens": {
+      "begin": "\\(",
+      "end": "\\)",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.brace.round.jello"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.brace.round.jello"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#parens"
+        },
+        {
+          "include": "#statements"
+        }
+      ]
+    },
+    "brackets": {
+      "begin": "\\[",
+      "end": "\\]",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.brace.square.jello"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.brace.square.jello"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#brackets"
+        },
+        {
+          "include": "#statements"
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "name": "punctuation.terminator.statement.jello",
+          "match": ";"
+        },
+        {
+          "name": "punctuation.separator.comma.jello",
+          "match": ","
+        },
+        {
+          "name": "punctuation.accessor.jello",
+          "match": "\\."
+        },
+        {
+          "name": "punctuation.separator.colon.jello",
+          "match": ":"
+        }
+      ]
+    },
+    "names": {
+      "patterns": [
+        {
+          "name": "variable.language.wildcard.jello",
+          "match": "\\b_\\b"
+        },
+        {
+          "name": "variable.other.readwrite.jello",
+          "match": "[_A-Za-z][_A-Za-z0-9]*"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.vscode/**
+.vscode-test/**
+src/**
+test/**
+scripts/**
+out/test/**
+**/*.ts
+**/*.map
+syntaxes/jello.grammar.mjs
+images/jello.svg
+node_modules/**
+tsconfig.json
+.gitignore
+*.vsix
+data/**

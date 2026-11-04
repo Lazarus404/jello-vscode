@@ -1,0 +1,46 @@
+// SYNTAX TEST "source.jello" "declarations"
+export let area<T: Eq> = fn(x: T): I32 { 1 };
+// <- storage.modifier.export.jello
+//     ^^^ storage.type.jello
+//         ^^^^ entity.name.function.jello
+//                             ^ entity.name.type.jello
+//                                 ^^^ support.type.primitive.jello
+let typed: (I32) -> Bytes = fn(n) { "" };
+//  ^^^^^ entity.name.function.jello
+//               ^^ keyword.operator.arrow.jello
+const LIMIT = 10;
+//    ^^^^^ variable.other.constant.jello
+let plain = 1;
+//  ^^^^^ variable.other.declaration.jello
+enum Shape { Square(side: U8); Dot; }
+// <- storage.type.jello
+//   ^^^^^ entity.name.type.enum.jello
+//           ^^^^^^ variable.other.enummember.jello
+//                        ^^ support.type.primitive.jello
+//                             ^^^ variable.other.enummember.jello
+typedef Point = { let x: I32; };
+//      ^^^^^ entity.name.type.jello
+prototype Counter {
+//        ^^^^^^^ entity.name.type.class.jello
+  count: 0;
+//^^^^^ variable.other.property.jello
+  bump(by: I32): I32 { this.count = by; by };
+//^^^^ entity.name.function.member.jello
+//                     ^^^^ variable.language.jello
+};
+let m = method fn() { super.x };
+//      ^^^^^^ storage.modifier.method.jello
+//                    ^^^^^ variable.language.jello
+macro twice(x) { quote.expr { unquote(x) + unquote(x) }; }
+// <- storage.type.jello
+//    ^^^^^ entity.name.function.macro.jello
+//               ^^^^^ keyword.other.quote.jello
+//                     ^^^^ keyword.other.quote.jello
+//                            ^^^^^^^ keyword.other.unquote.jello
+typedef Header = bytes-layout { let kind: u8; let len: u16.le; let body: rest; };
+//               ^^^^^ storage.type.layout.jello
+//                                        ^^ support.type.segment.jello
+//                                                     ^^^ support.type.segment.jello
+//                                                         ^^ storage.modifier.endian.jello
+typedef Window = abstract;
+//               ^^^^^^^^ storage.type.abstract.jello

@@ -1,0 +1,56 @@
+// SYNTAX TEST "source.jello" "modules, statements and operators"
+package app.geometry;
+// <- keyword.control.import.jello
+//      ^^^^^^^^^^^^ entity.name.namespace.jello
+import { map, first as head } from std.core.Array;
+// <- keyword.control.import.jello
+//       ^^^ variable.other.readwrite.import.jello
+//                  ^^ keyword.control.import.jello
+//                     ^^^^ variable.other.alias.jello
+//                                 ^^^^^^^^^^^^^^ entity.name.namespace.jello
+import type { Test } from std.testing;
+//     ^^^^ keyword.control.import.jello
+import std.testing as T;
+//     ^^^^^^^^^^^ entity.name.namespace.jello
+//                    ^ variable.other.alias.jello
+for (i, x in xs.map(fn(y) { y })) { continue; }
+// <- keyword.control.jello
+//        ^^ keyword.control.in.jello
+//              ^^^ entity.name.function.member.jello
+//                                  ^^^^^^^^ keyword.control.jello
+let v = x ?? 3 |> f(%, 1);
+//        ^^ keyword.operator.coalesce.jello
+//             ^^ keyword.operator.pipeline.jello
+//                ^ entity.name.function.call.jello
+//                  ^ variable.language.pipeline.jello
+match (v) { Shape.Square(^side) => 1, n when (n > 0) => n % 2, _ => 0 }
+// <- keyword.control.jello
+//                ^^^^^^ variable.other.enummember.jello
+//                       ^ keyword.operator.pin.jello
+//                              ^^ punctuation.separator.arrow.jello
+//                                      ^^^^ keyword.control.jello
+//                                                        ^ keyword.operator.arithmetic.jello
+//                                                             ^ variable.language.wildcard.jello
+let b = bits[u16(1), u32.le(xs[0]), rest(tail)];
+//      ^^^^ keyword.other.literal.jello
+//           ^^^ support.type.segment.jello
+//                   ^^^ support.type.segment.jello
+//                       ^^ storage.modifier.endian.jello
+//                                  ^^^^ support.type.segment.jello
+let l = list[for q <- items when (q > 1), do: q];
+//      ^^^^ keyword.other.literal.jello
+//                 ^^ keyword.operator.generator.jello
+let list = 1; o.type; await;
+//  ^^^^ variable.other.declaration.jello
+//              ^^^^ variable.other.property.jello
+//                    ^^^^^ keyword.other.reserved.jello
+let n = Math.max(1, 2) + Array.new<I32>(0).len() + xs.len();
+//      ^^^^ support.class.namespace.jello
+//           ^^^ entity.name.function.member.jello
+//                       ^^^^^ support.class.namespace.jello
+x <<= 2; y ??= 1; z -> w; a <- b;
+//^^^ keyword.operator.assignment.compound.jello
+let e = v is I32 && !(v as I64 == 0i64);
+//        ^^ keyword.operator.expression.jello
+//                  ^ keyword.operator.logical.jello
+//                      ^^ keyword.operator.expression.jello

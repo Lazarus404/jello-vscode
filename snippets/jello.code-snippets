@@ -1,0 +1,464 @@
+{
+  "let": {
+    "prefix": "let",
+    "body": [
+      "let ${1:name} = ${0:value};"
+    ],
+    "description": "Binding"
+  },
+  "let typed": {
+    "prefix": "lett",
+    "body": [
+      "let ${1:name}: ${2:I32} = ${0:value};"
+    ],
+    "description": "Binding with a type"
+  },
+  "const": {
+    "prefix": "const",
+    "body": [
+      "const ${1:NAME} = ${0:value};"
+    ],
+    "description": "Constant, folded where it is read"
+  },
+  "function": {
+    "prefix": "fn",
+    "body": [
+      "let ${1:name} = fn(${2:x}: ${3:I32}): ${4:I32} {",
+      "\t${0:x}",
+      "};"
+    ],
+    "description": "Function binding"
+  },
+  "generic function": {
+    "prefix": "fngen",
+    "body": [
+      "let ${1:name}<${2:T}> = fn(${3:x}: ${2:T}): ${2:T} {",
+      "\t${0:x}",
+      "};"
+    ],
+    "description": "Generic function binding"
+  },
+  "lambda": {
+    "prefix": "lambda",
+    "body": [
+      "fn(${1:x}) { ${0:x} }"
+    ],
+    "description": "Function expression"
+  },
+  "method function": {
+    "prefix": "method",
+    "body": [
+      "method fn(${1:x}: ${2:I32}): ${3:I32} {",
+      "\t${0:x}",
+      "}"
+    ],
+    "description": "Function that sees this"
+  },
+  "parameters": {
+    "prefix": "fnparams",
+    "body": [
+      "fn(${1:x}: ${2:I32}, ${3:y}: ${4:I32} = ${5:1}, ?${6:z}: ${7:I32}, ...${8:rest}: ${9:I32}): ${10:I32} {",
+      "\t${0:x}",
+      "}"
+    ],
+    "description": "Required, default, optional and variadic parameters"
+  },
+  "if": {
+    "prefix": "if",
+    "body": [
+      "if (${1:condition}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "if"
+  },
+  "if else": {
+    "prefix": "ife",
+    "body": [
+      "if (${1:condition}) {",
+      "\t$2",
+      "} else {",
+      "\t$0",
+      "}"
+    ],
+    "description": "if / else"
+  },
+  "else if": {
+    "prefix": "elif",
+    "body": [
+      "else if (${1:condition}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "else if"
+  },
+  "if let": {
+    "prefix": "iflet",
+    "body": [
+      "if (let ${1:[head, ..._]} = ${2:xs}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Test a pattern, binding its names"
+  },
+  "while let": {
+    "prefix": "whilelet",
+    "body": [
+      "while (let ${1:[head | tail]} = ${2:items}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Loop while a pattern matches"
+  },
+  "let else": {
+    "prefix": "letelse",
+    "body": [
+      "let ${1:[head, ..._]} = ${2:xs} else { ${3:return 0;} };"
+    ],
+    "description": "Bind a pattern that can fail; else must leave"
+  },
+  "for": {
+    "prefix": "for",
+    "body": [
+      "for (${1:x} in ${2:xs}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Loop over an Array, Bytes or List"
+  },
+  "for index": {
+    "prefix": "fori",
+    "body": [
+      "for (${1:i}, ${2:x} in ${3:xs}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Loop with the index"
+  },
+  "while": {
+    "prefix": "while",
+    "body": [
+      "while (${1:condition}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "while"
+  },
+  "do while": {
+    "prefix": "dowhile",
+    "body": [
+      "do {",
+      "\t$0",
+      "} while (${1:condition});"
+    ],
+    "description": "do \u2026 while"
+  },
+  "match": {
+    "prefix": "match",
+    "body": [
+      "match (${1:value}) {",
+      "\t${2:pattern} => ${3:result},",
+      "\t_ => ${0:fallback},",
+      "}"
+    ],
+    "description": "Pattern match"
+  },
+  "match arm with guard": {
+    "prefix": "when",
+    "body": [
+      "${1:x} when (${2:x > 0}) => ${0:x},"
+    ],
+    "description": "Match arm with a guard"
+  },
+  "with": {
+    "prefix": "with",
+    "body": [
+      "with (${1:a}, ${2:b}) <- ${3:pair} {",
+      "\t${4:a + b}",
+      "} else {",
+      "\t_ => ${0:0}",
+      "}"
+    ],
+    "description": "Run a body when every clause matches"
+  },
+  "try catch": {
+    "prefix": "try",
+    "body": [
+      "try {",
+      "\t$1",
+      "} catch (${2:e}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "try / catch"
+  },
+  "throw": {
+    "prefix": "throw",
+    "body": [
+      "throw ${0:value};"
+    ],
+    "description": "throw"
+  },
+  "return": {
+    "prefix": "ret",
+    "body": [
+      "return ${0:value};"
+    ],
+    "description": "return"
+  },
+  "enum": {
+    "prefix": "enum",
+    "body": [
+      "enum ${1:Name} {",
+      "\t${2:First};",
+      "\t${3:Second}(${4:value}: ${5:I32});",
+      "}"
+    ],
+    "description": "Enum"
+  },
+  "generic enum": {
+    "prefix": "enumgen",
+    "body": [
+      "enum ${1:Maybe}<${2:T}> {",
+      "\t${3:Nothing};",
+      "\t${4:Just}(${5:value}: ${2:T});",
+      "}"
+    ],
+    "description": "Generic enum"
+  },
+  "record typedef": {
+    "prefix": "record",
+    "body": [
+      "typedef ${1:Point} = {",
+      "\tlet ${2:x}: ${3:I32};",
+      "\tlet ${4:y}: ${5:I32};",
+      "};"
+    ],
+    "description": "Record typedef"
+  },
+  "alias typedef": {
+    "prefix": "typedef",
+    "body": [
+      "typedef ${1:Name} = ${0:Array<I32>};"
+    ],
+    "description": "Type alias"
+  },
+  "bytes layout": {
+    "prefix": "layout",
+    "body": [
+      "typedef ${1:Header} = bytes-layout {",
+      "\tlet ${2:kind}: ${3:u8};",
+      "\tlet ${4:length}: ${5:u16.le};",
+      "\tlet ${6:body}: rest;",
+      "};"
+    ],
+    "description": "Byte layout typedef"
+  },
+  "prototype": {
+    "prefix": "prototype",
+    "body": [
+      "prototype ${1:Counter} {",
+      "\t${2:count}: ${3:0};",
+      "\tinit(${4:start}: ${5:I32}) { this.${2:count} = ${4:start}; };",
+      "\t${6:bump}(): ${7:I32} {",
+      "\t\t${0:0}",
+      "\t};",
+      "};"
+    ],
+    "description": "Prototype with init and a method"
+  },
+  "linked prototype": {
+    "prefix": "linked",
+    "body": [
+      "typedef ${1:Counter} = {",
+      "\tlet ${2:count}: ${3:I32};",
+      "};",
+      "prototype ${1:Counter} {",
+      "\tinit(${4:start}: ${3:I32}) { this.${2:count} = ${4:start}; };",
+      "\t${5:bump}(): ${3:I32} {",
+      "\t\tthis.${2:count}++;",
+      "\t\t${0:this.count}",
+      "\t};",
+      "};"
+    ],
+    "description": "Typedef and prototype linked by name: typed fields, fixed methods"
+  },
+  "new": {
+    "prefix": "new",
+    "body": [
+      "new ${1:Name}(${0})"
+    ],
+    "description": "Construct from a prototype"
+  },
+  "import": {
+    "prefix": "import",
+    "body": [
+      "import { ${2:name} } from ${1:std.core.Array};"
+    ],
+    "description": "Named import"
+  },
+  "import type": {
+    "prefix": "importtype",
+    "body": [
+      "import type { ${2:Name} } from ${1:module};"
+    ],
+    "description": "Type-only import"
+  },
+  "import as": {
+    "prefix": "importas",
+    "body": [
+      "import ${1:std.testing} as ${0:T};"
+    ],
+    "description": "Namespace import"
+  },
+  "load": {
+    "prefix": "load",
+    "body": [
+      "load { ${2:name} } from ${1:std};"
+    ],
+    "description": "Native functions from a JDLL"
+  },
+  "export": {
+    "prefix": "export",
+    "body": [
+      "export let ${1:name} = ${0:value};"
+    ],
+    "description": "Exported binding"
+  },
+  "export function": {
+    "prefix": "exportfn",
+    "body": [
+      "export let ${1:name} = fn(${2:x}: ${3:I32}): ${4:I32} {",
+      "\t${0:x}",
+      "};"
+    ],
+    "description": "Exported function"
+  },
+  "package": {
+    "prefix": "package",
+    "body": [
+      "package ${0:path.to};"
+    ],
+    "description": "Package declaration"
+  },
+  "macro": {
+    "prefix": "macro",
+    "body": [
+      "macro ${1:name}(${2:x}) {",
+      "\tquote.expr { ${0:unquote(x)} };",
+      "}"
+    ],
+    "description": "Macro"
+  },
+  "quote": {
+    "prefix": "quote",
+    "body": [
+      "quote.${1|expr,stmt,stmts,pat,type|} { ${0:unquote(x)} }"
+    ],
+    "description": "Quote, in a macro body"
+  },
+  "unquote": {
+    "prefix": "unquote",
+    "body": [
+      "unquote(${0:x})"
+    ],
+    "description": "Unquote, in a quote"
+  },
+  "comprehension": {
+    "prefix": "listfor",
+    "body": [
+      "list[for ${1:x} <- ${2:items} when (${3:true}), do: ${0:x}]"
+    ],
+    "description": "List comprehension"
+  },
+  "list": {
+    "prefix": "list",
+    "body": [
+      "list[${0}]"
+    ],
+    "description": "List literal"
+  },
+  "bits": {
+    "prefix": "bits",
+    "body": [
+      "bits[${1:u16}(${2:1}), ${3:u32.le}(${4:2})${0}]"
+    ],
+    "description": "Bits literal"
+  },
+  "pipeline": {
+    "prefix": "pipe",
+    "body": [
+      "${1:value} |> ${2:f}(%)${0}"
+    ],
+    "description": "Pipeline; % is the piped value"
+  },
+  "regexp": {
+    "prefix": "regexp",
+    "body": [
+      "~r/${1:pattern}/${0}"
+    ],
+    "description": "Regexp literal"
+  },
+  "template": {
+    "prefix": "tpl",
+    "body": [
+      "`${1:text} \\${${2:value}}`"
+    ],
+    "description": "Template"
+  },
+  "string": {
+    "prefix": "str",
+    "body": [
+      "Std.string(${0:value})"
+    ],
+    "description": "A value as text"
+  },
+  "doc comment": {
+    "prefix": "doc",
+    "body": [
+      "/** ${1:What it does.}",
+      " * @param ${2:x}  ${3:what it is}",
+      " * @return ${0:what comes back} */"
+    ],
+    "description": "Doc comment"
+  },
+  "region": {
+    "prefix": "region",
+    "body": [
+      "// #region ${1:name}",
+      "$0",
+      "// #endregion"
+    ],
+    "description": "Folding region"
+  },
+  "test file": {
+    "prefix": "testfile",
+    "body": [
+      "import type { Test } from std.testing;",
+      "import std.testing as T;",
+      "",
+      "let test${1:Name} = fn(t: Test) {",
+      "\tT.equal(t, ${2:1 + 1}, ${0:2});",
+      "};"
+    ],
+    "description": "Test file header and first test"
+  },
+  "test": {
+    "prefix": "test",
+    "body": [
+      "let test${1:Name} = fn(t: Test) {",
+      "\tT.equal(t, ${2:got}, ${0:want});",
+      "};"
+    ],
+    "description": "Test function"
+  },
+  "subtest": {
+    "prefix": "subtest",
+    "body": [
+      "T.run(t, \"${1:case}\", fn(t: Test) {",
+      "\t$0",
+      "});"
+    ],
+    "description": "Subtest"
+  }
+}
